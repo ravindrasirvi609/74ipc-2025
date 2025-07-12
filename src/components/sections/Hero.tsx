@@ -95,7 +95,7 @@ const Hero = () => {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <Link
-            href="#registration"
+            href="/registration"
             className="group relative isolate overflow-hidden rounded-full px-7 py-3 font-bold text-white bg-[#e1681f] shadow-lg hover:shadow-[#e1681f]/30 transition-all duration-300 ease-out hover:scale-105"
           >
             <span className="relative z-10 flex items-center gap-2">

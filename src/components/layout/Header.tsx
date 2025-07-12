@@ -142,7 +142,7 @@ const Header = () => {
               </div>
             </div>
             <Link
-              href="#registration"
+              href="/registration"
               className="bg-pharmaceutical-600 hover:bg-pharmaceutical-700 text-white px-6 py-2 rounded-full font-medium transition-colors"
             >
               Register Now
@@ -222,7 +222,7 @@ const Header = () => {
                 </div>
               </div>
               <Link
-                href="#registration"
+                href="/registration"
                 className="block w-full text-center bg-pharmaceutical-600 hover:bg-pharmaceutical-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

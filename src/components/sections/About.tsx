@@ -162,7 +162,7 @@ const About = () => {
               shaping the future of healthcare.
             </p>
             <a
-              href="#registration"
+              href="/registration"
               className="bg-pharmaceutical-600 hover:bg-pharmaceutical-700 text-white px-8 py-3 rounded-full font-bold transition-colors inline-block"
             >
               Register Today
