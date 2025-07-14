@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost'],
-  },
+  remotePatterns: [
+    {
+      protocol: 'https',
+      hostname: '**',
+    },
+  ],
+},
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
