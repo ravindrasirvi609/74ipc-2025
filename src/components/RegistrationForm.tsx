@@ -81,7 +81,6 @@ const pricingInfo: PricingInfo = {
 const RegistrationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const {
     register,
@@ -166,8 +165,7 @@ const RegistrationForm = () => {
       if (result.data.paymentUrl) {
         window.location.href = result.data.paymentUrl;
       } else {
-        // Fallback: show success message
-        setSubmitSuccess(true);
+        setSubmitError("Failed to initiate payment. Please try again.");
       }
     } catch (error) {
       console.error("Registration error:", error);
@@ -180,21 +178,6 @@ const RegistrationForm = () => {
       setIsSubmitting(false);
     }
   };
-
-  if (submitSuccess) {
-    return (
-      <div className="max-w-md mx-auto text-center py-12">
-        <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          Registration Successful!
-        </h2>
-        <p className="text-gray-600">
-          Your registration has been submitted successfully. You will receive a
-          confirmation email shortly.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">

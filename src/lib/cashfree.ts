@@ -42,7 +42,9 @@ export class CashfreeService {
         order_amount: orderData.orderAmount,
         order_currency: "INR",
         customer_details: {
-          customer_id: orderData.customerEmail,
+          customer_id: orderData.customerEmail
+            .split("@")[0]
+            .replace(/[^a-zA-Z0-9_-]/g, "_"),
           customer_name: orderData.customerName,
           customer_email: orderData.customerEmail,
           customer_phone: orderData.customerPhone,
