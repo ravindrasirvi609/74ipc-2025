@@ -67,7 +67,8 @@ const Footer = () => {
               <div>
                 <p className="font-medium text-white">Theme</p>
                 <p className="italic">
-                  "AI & Technology in Pharma: Educate, Innovate, Empower"
+                  &quot;AI &amp; Technology in Pharma: Educate, Innovate,
+                  Empower&quot;
                 </p>
               </div>
               <div>
@@ -184,7 +185,8 @@ const Footer = () => {
             </div>
             <div className="text-center md:text-right">
               <p className="text-gray-400 text-sm">
-                © 2025 74th Indian Pharmaceutical Congress. All rights reserved.
+                © 2025 74th Indian Pharmaceutical Congress. All rights
+                reserved.
               </p>
               <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-xs text-gray-500">
                 <Link

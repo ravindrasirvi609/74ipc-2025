@@ -318,7 +318,7 @@ export default function AccommodationPage() {
               Partner Hotels
             </h2>
             <p className="text-lg text-secondary-600 max-w-3xl mx-auto">
-              We've partnered with top hotels in Bangalore to offer you
+              We&apos;ve partnered with top hotels in Bangalore to offer you
               comfortable accommodation with special conference rates and
               convenient shuttle services.
             </p>

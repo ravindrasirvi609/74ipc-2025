@@ -89,9 +89,9 @@ const AboutIPCA = () => {
               </h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 The Indian Pharmaceutical Congress Association (IPCA) stands as
-                India's most prestigious organization dedicated to advancing
-                pharmaceutical sciences, fostering innovation, and shaping the
-                future of healthcare.
+                India&apos;s most prestigious organization dedicated to
+                advancing pharmaceutical sciences, fostering innovation, and
+                shaping the future of healthcare.
               </p>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 Since our inception in 1950, we have been at the forefront of
@@ -101,10 +101,10 @@ const AboutIPCA = () => {
                 solutions.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Today, as we embrace the 74th edition with the theme "AI &
-                Technology in Pharma: Educate, Innovate, Empower," we continue
-                our mission to lead the pharmaceutical industry into the digital
-                age.
+                Today, as we embrace the 74th edition with the theme &quot;AI
+                &amp; Technology in Pharma: Educate, Innovate, Empower,&quot; we
+                continue our mission to lead the pharmaceutical industry into
+                the digital age.
               </p>
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg">

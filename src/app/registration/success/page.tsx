@@ -288,7 +288,7 @@ const PaymentSuccess = () => {
                 {/* What's Next */}
                 <div className="mt-8 pt-8 border-t border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                    What's Next?
+                    What&apos;s Next?
                   </h3>
                   <div className="grid md:grid-cols-3 gap-6">
                     <div className="text-center">
@@ -297,8 +297,8 @@ const PaymentSuccess = () => {
                         Confirmation Email
                       </h4>
                       <p className="text-sm text-gray-600">
-                        You'll receive a detailed confirmation email within 24
-                        hours
+                        You&apos;ll receive a detailed confirmation email within
+                        24 hours
                       </p>
                     </div>
                     <div className="text-center">

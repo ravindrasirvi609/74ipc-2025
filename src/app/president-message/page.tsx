@@ -16,7 +16,7 @@ export default function PresidentMessagePage() {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            President's Message
+            President&apos;s Message
           </h1>
           <p className="text-xl md:text-2xl text-pharmaceutical-100">
             74th Indian Pharmaceutical Congress, Bengaluru 2025
@@ -65,16 +65,18 @@ export default function PresidentMessagePage() {
                     its defining characteristics is its nationwide reach,
                     rotating locations to connect with professionals across the
                     country. The Congress draws stakeholders from all key
-                    sectors—academia, regulation, and industry—and serves as an
-                    inspiring window into the profession for countless students,
-                    leaving a lasting impact on their aspirations.
+                    sectors&mdash;academia, regulation, and industry&mdash;and
+                    serves as an inspiring window into the profession for
+                    countless students, leaving a lasting impact on their
+                    aspirations.
                   </p>
 
                   <p className="text-gray-700 leading-relaxed mb-6">
                     74th Indian Pharmaceutical Congress will be held in
                     Bengaluru in December 2025. The theme this year is{" "}
                     <strong className="text-pharmaceutical-600">
-                      "AI & TECHNOLOGY IN PHARMA: EDUCATE, INNOVATE, EMPOWER"
+                      &quot;AI &amp; TECHNOLOGY IN PHARMA: EDUCATE, INNOVATE,
+                      EMPOWER&quot;
                     </strong>
                     . Our team of strong dedicated LOC has already started
                     working on various aspects of the congress. The four
@@ -96,7 +98,7 @@ export default function PresidentMessagePage() {
                     powerhouse, it is crucial to simultaneously elevate
                     education and pharmacy practice. We anticipate productive,
                     interactive sessions that will culminate in actionable
-                    outcomes aimed at achieving this vision—with a strong
+                    outcomes aimed at achieving this vision&mdash;with a strong
                     emphasis on quality over quantity.
                   </p>
 

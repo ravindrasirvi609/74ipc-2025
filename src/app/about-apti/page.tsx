@@ -226,8 +226,8 @@ const AboutAPTI = () => {
               Join the APTI Community
             </h2>
             <p className="text-xl mb-8 max-w-3xl mx-auto">
-              Be part of India's leading network of pharmacy educators and help
-              shape the future of pharmaceutical sciences.
+              Be part of India&apos;s leading network of pharmacy educators and
+              help shape the future of pharmaceutical sciences.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Link

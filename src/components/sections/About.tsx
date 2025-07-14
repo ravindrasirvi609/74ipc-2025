@@ -56,10 +56,10 @@ const About = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed">
-            Join us for the 74th edition focusing on "AI & Technology in Pharma:
-            Educate, Innovate, Empower" - exploring how artificial intelligence
-            and cutting-edge technology are revolutionizing pharmaceutical
-            sciences and healthcare delivery.
+            Join us for the 74th edition focusing on &quot;AI &amp; Technology
+            in Pharma: Educate, Innovate, Empower&quot; - exploring how
+            artificial intelligence and cutting-edge technology are
+            revolutionizing pharmaceutical sciences and healthcare delivery.
           </p>
         </div>
 
@@ -77,10 +77,11 @@ const About = () => {
                 bringing together the brightest minds in pharmaceutical
                 research, industry leadership, and healthcare innovation.
               </p>
-              <p className="text-lg leading-relaxed">
-                This year's theme,{" "}
+              <p className="text-lg text-gray-600 mb-6">
+                This year&apos;s theme,{" "}
                 <strong className="text-pharmaceutical-600">
-                  "AI & Technology in Pharma: Educate, Innovate, Empower,"
+                  &quot;AI &amp; Technology in Pharma: Educate, Innovate,
+                  Empower,&quot;
                 </strong>{" "}
                 reflects our commitment to exploring how artificial intelligence
                 and emerging technologies are transforming pharmaceutical
@@ -158,8 +159,8 @@ const About = () => {
               Ready to be Part of This Historic Event?
             </h3>
             <p className="text-gray-600 mb-6">
-              Secure your spot at the 74th IPC and join the conversation that's
-              shaping the future of healthcare.
+              Secure your spot at the 74th IPC and join the conversation
+              that&apos;s shaping the future of healthcare.
             </p>
             <a
               href="/registration"

@@ -237,7 +237,7 @@ const KeyFocusAreas = () => {
           {/* Session Types */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
-              How We'll Explore These Areas
+              How We&apos;ll Explore These Areas
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {sessionTypes.map((session, index) => (

@@ -264,10 +264,10 @@ const Sponsors = () => {
                 tier.tier === "Platinum Partners"
                   ? "md:grid-cols-3"
                   : tier.tier === "Gold Sponsors"
-                  ? "md:grid-cols-5"
-                  : tier.tier === "Silver Supporters"
-                  ? "md:grid-cols-4"
-                  : "md:grid-cols-5"
+                    ? "md:grid-cols-5"
+                    : tier.tier === "Silver Supporters"
+                      ? "md:grid-cols-4"
+                      : "md:grid-cols-5"
               }`}
             >
               {tier.sponsors.map((sponsor, index) => (
@@ -383,7 +383,7 @@ const Sponsors = () => {
           <h3 className="text-3xl font-bold mb-4">Partner With Us</h3>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Join leading pharmaceutical companies in supporting the advancement
-            of pharmaceutical sciences and connect with the industry's most
+            of pharmaceutical sciences and connect with the industry&apos;s most
             influential professionals.
           </p>
 

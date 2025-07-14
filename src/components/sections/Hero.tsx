@@ -2,6 +2,7 @@
 import { Calendar, MapPin, Users, ArrowRight, Play } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 // 6 high-quality photos of Bangalore tourist places
 const slides = [
@@ -35,10 +36,12 @@ const Hero = () => {
               idx === current ? "opacity-100" : "opacity-0"
             }`}
           >
-            <img
+            <Image
               src={src}
               alt={`Bangalore tourist place ${idx + 1}`}
+              fill
               className="w-full h-full object-cover"
+              priority={idx === 0}
             />
             <div className="absolute inset-0 bg-black/60" />
           </div>

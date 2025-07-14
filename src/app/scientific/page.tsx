@@ -504,8 +504,8 @@ export default function ScientificPage() {
                       item.status === "Deadline"
                         ? "bg-red-100 text-red-800"
                         : item.status === "Open"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-blue-100 text-blue-800"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-blue-100 text-blue-800"
                     }`}
                   >
                     {item.status}
@@ -638,11 +638,11 @@ export default function ScientificPage() {
               </p>
               <p className="mb-4">
                 <strong>
-                  "Pharmacy Council of India has accorded recognition to the
-                  Scientific Sessions of the IPC as a refresher
+                  &quot;Pharmacy Council of India has accorded recognition to
+                  the Scientific Sessions of the IPC as a refresher
                   course/continuing pharmacy education programme under
                   regulations 4.2 (IV) of the Pharmacy Practice Regulations
-                  2015".
+                  2015&quot;.
                 </strong>
               </p>
               <p>

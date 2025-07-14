@@ -104,8 +104,8 @@ const Registration = () => {
             <span className="block text-pharmaceutical-600">74th IPC 2025</span>
           </h2>
           <p className="text-xl text-gray-600">
-            Secure your spot at India's premier pharmaceutical congress. Early
-            bird registration ends January 15, 2025.
+            Secure your spot at India&apos;s premier pharmaceutical congress.
+            Early bird registration ends January 15, 2025.
           </p>
         </div>
 

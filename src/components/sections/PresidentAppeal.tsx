@@ -45,7 +45,8 @@ export default function PresidentAppeal() {
                 74th Indian Pharmaceutical Congress will be held in Bengaluru in
                 December 2025. The theme this year is{" "}
                 <span className="font-semibold text-pharmaceutical-600">
-                  "AI & TECHNOLOGY IN PHARMA: EDUCATE, INNOVATE, EMPOWER"
+                  &quot;AI &amp; TECHNOLOGY IN PHARMA: EDUCATE, INNOVATE,
+                  EMPOWER&quot;
                 </span>
                 . I warmly invite you to support the 74th Indian Pharmaceutical
                 Congress by sponsoring events and advertising in the Congress

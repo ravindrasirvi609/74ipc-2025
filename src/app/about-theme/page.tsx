@@ -110,9 +110,9 @@ const AboutTheme = () => {
             <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               The pharmaceutical industry stands at the cusp of a digital
               revolution. AI and advanced technologies are not just enhancing
-              existing processes—they're fundamentally reshaping how we
-              discover, develop, manufacture, and deliver medicines to patients
-              worldwide.
+              existing processes&mdash;they&apos;re fundamentally reshaping how
+              we discover, develop, manufacture, and deliver medicines to
+              patients worldwide.
             </p>
           </div>
 
@@ -218,14 +218,14 @@ const AboutTheme = () => {
           {/* Impact Statement */}
           <div className="bg-gradient-to-r from-pharmaceutical-500 to-primary-600 rounded-2xl p-12 text-white text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Shaping Tomorrow's Pharmaceutical Landscape
+              Shaping Tomorrow&apos;s Pharmaceutical Landscape
             </h2>
             <p className="text-xl mb-8 max-w-4xl mx-auto leading-relaxed">
-              Through our theme "AI & Technology in Pharma: Educate, Innovate,
-              Empower," we aim to create a comprehensive ecosystem where
-              knowledge, innovation, and empowerment converge to drive the
-              pharmaceutical industry forward into a more efficient, effective,
-              and patient-centric future.
+              Through our theme &quot;AI &amp; Technology in Pharma: Educate,
+              Innovate, Empower,&quot; we aim to create a comprehensive
+              ecosystem where knowledge, innovation, and empowerment converge to
+              drive the pharmaceutical industry forward into a more efficient,
+              effective, and patient-centric future.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Link

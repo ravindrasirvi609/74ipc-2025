@@ -58,7 +58,7 @@ const KeyFeatures = () => {
           </h2>
           <p className="text-xl text-gray-600">
             Experience unparalleled opportunities for learning, networking, and
-            professional growth at India's premier pharmaceutical congress.
+            professional growth at India&apos;s premier pharmaceutical congress.
           </p>
         </div>
 

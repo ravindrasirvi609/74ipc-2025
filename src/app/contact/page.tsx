@@ -181,7 +181,7 @@ export default function ContactPage() {
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">Contact Us</h1>
             <p className="text-xl md:text-2xl mb-8 text-pharmaceutical-100">
-              We're Here to Help You with IPC 2025
+              We&apos;re Here to Help You with IPC 2025
             </p>
             <div className="flex flex-wrap justify-center gap-6 text-sm md:text-base">
               <div className="flex items-center gap-2">
@@ -433,8 +433,8 @@ export default function ContactPage() {
               Send Us a Message
             </h2>
             <p className="text-lg text-secondary-600">
-              Have a specific query? Fill out the form below and we'll get back
-              to you within 24 hours.
+              Have a specific query? Fill out the form below and we&apos;`ll get
+              back to you within 24 hours.
             </p>
           </div>
 

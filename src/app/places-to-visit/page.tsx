@@ -368,9 +368,9 @@ export default function PlacesToVisitPage() {
               Must-Visit Attractions
             </h2>
             <p className="text-lg text-secondary-600 max-w-3xl mx-auto">
-              Discover Bangalore's most popular destinations, from lush gardens
-              and historic palaces to modern shopping complexes and scenic hill
-              stations.
+              Discover Bangalore&apos;s most popular destinations, from lush
+              gardens and historic palaces to modern shopping complexes and
+              scenic hill stations.
             </p>
           </div>
 
@@ -465,7 +465,8 @@ export default function PlacesToVisitPage() {
               Cultural Experiences
             </h2>
             <p className="text-lg text-secondary-600">
-              Immerse yourself in Bangalore's rich cultural heritage and history
+              Immerse yourself in Bangalore&apos;s rich cultural heritage and
+              history
             </p>
           </div>
 
@@ -503,7 +504,7 @@ export default function PlacesToVisitPage() {
               Culinary Delights
             </h2>
             <p className="text-lg text-secondary-600">
-              Savor the flavors of Bangalore's diverse food scene
+              Savor the flavors of Bangalore&apos;s diverse food scene
             </p>
           </div>
 
@@ -570,8 +571,8 @@ export default function PlacesToVisitPage() {
               Shopping Destinations
             </h2>
             <p className="text-lg text-secondary-600">
-              From traditional markets to modern malls - shop to your heart's
-              content
+              From traditional markets to modern malls - shop to your
+              heart&apos;s content
             </p>
           </div>
 

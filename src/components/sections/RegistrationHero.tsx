@@ -10,8 +10,8 @@ export default function RegistrationHero() {
             Registration <span className="text-pharmaceutical-200">Open</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-pharmaceutical-100 max-w-3xl mx-auto">
-            Join the 74th Indian Pharmaceutical Congress 2025 - India's premier
-            pharmaceutical event bringing together industry leaders,
+            Join the 74th Indian Pharmaceutical Congress 2025 - India&apos;s
+            premier pharmaceutical event bringing together industry leaders,
             researchers, and innovators
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-sm md:text-base">
