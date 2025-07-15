@@ -140,6 +140,12 @@ export async function POST(request: NextRequest) {
       notifyUrl: `${process.env.APP_URL}/api/registration/webhook`,
     });
 
+    console.log("Payment data received from Cashfree:", {
+      orderId: paymentData.orderId,
+      paymentSessionId: paymentData.paymentSessionId,
+      paymentUrl: paymentData.paymentUrl ? "[URL PRESENT]" : "[NO URL]",
+    });
+
     // Update registration with Cashfree order ID
     await Registration.findByIdAndUpdate(registration._id, {
       cashfreeOrderId: paymentData.paymentSessionId,

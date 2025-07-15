@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,6 +16,7 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
+// Remove: import { useCashfree } from "@/hooks/useCashfree";
 
 // Form validation schema
 const registrationSchema = z.object({
@@ -81,6 +82,7 @@ const pricingInfo: PricingInfo = {
 const RegistrationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Remove: useCashfree(); // ← one-liner
 
   const {
     register,
@@ -161,20 +163,70 @@ const RegistrationForm = () => {
         throw new Error(result.message || "Registration failed");
       }
 
-      // Redirect to Cashfree payment page
-      if (result.data.paymentUrl) {
-        window.location.href = result.data.paymentUrl;
+      // Use Cashfree popup checkout according to documentation
+      if (result.data?.paymentSessionId) {
+        // Check if Cashfree SDK is loaded
+        if (typeof window !== "undefined" && (window as any).Cashfree) {
+          try {
+            // Use the global Cashfree SDK (mode can be set via env or hardcoded)
+            const mode =
+              process.env.NEXT_PUBLIC_CASHFREE_ENVIRONMENT === "production"
+                ? "production"
+                : "sandbox";
+            const cashfree = (window as any).Cashfree({ mode });
+
+            const checkoutOptions = {
+              paymentSessionId: result.data.paymentSessionId,
+              redirectTarget: "_modal", // Opens payment in popup modal
+            };
+
+            setIsSubmitting(true);
+            cashfree
+              .checkout(checkoutOptions)
+              .then((checkoutResult: any) => {
+                if (checkoutResult?.error) {
+                  setSubmitError(
+                    `Payment failed: ${checkoutResult.error.description || checkoutResult.error.message || "Unknown error"}`
+                  );
+                  setIsSubmitting(false);
+                } else if (
+                  checkoutResult?.paymentDetails ||
+                  checkoutResult?.redirect
+                ) {
+                  // Payment success or redirect
+                  window.location.href = `/registration/success?order_id=${result.data.orderId}`;
+                } else {
+                  // Fallback: redirect to success page to check status
+                  window.location.href = `/registration/success?order_id=${result.data.orderId}`;
+                }
+              })
+              .catch(() => {
+                setSubmitError(
+                  "Failed to open payment checkout. Please try again."
+                );
+                setIsSubmitting(false);
+              });
+          } catch {
+            setSubmitError(
+              "Payment system initialization failed. Please refresh and try again."
+            );
+            setIsSubmitting(false);
+          }
+        } else {
+          setSubmitError(
+            "Payment system not ready. Please refresh the page and try again."
+          );
+          setIsSubmitting(false);
+        }
       } else {
-        setSubmitError("Failed to initiate payment. Please try again.");
+        throw new Error("Payment session not received from server");
       }
     } catch (error) {
-      console.error("Registration error:", error);
       setSubmitError(
         error instanceof Error
           ? error.message
           : "An error occurred during registration"
       );
-    } finally {
       setIsSubmitting(false);
     }
   };

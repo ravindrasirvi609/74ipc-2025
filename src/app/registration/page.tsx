@@ -7,6 +7,9 @@ import APTIMembershipNotice from "@/components/sections/APTIMembershipNotice";
 import RegistrationInclusions from "@/components/sections/RegistrationInclusions";
 import PricingTable from "@/components/sections/PricingTable";
 import PaymentAndInstructions from "@/components/sections/PaymentAndInstructions";
+import CashfreeDebug from "@/components/CashfreeDebug";
+import CashfreeSDKLoader from "@/components/CashfreeSDKLoader";
+import CashfreeSDKStatus from "@/components/CashfreeSDKStatus";
 
 export default function RegistrationPage() {
   const handleRegisterClick = (categoryId: number) => {
@@ -44,6 +47,10 @@ export default function RegistrationPage() {
               after successful payment.
             </p>
           </div>
+
+          {/* Debug Component */}
+          <CashfreeSDKStatus />
+
           <RegistrationForm />
         </div>
       </section>
@@ -74,6 +81,13 @@ export default function RegistrationPage() {
           </div>
         </div>
       </section>
+
+      {/* Debug Component for Development */}
+      <CashfreeDebug />
+      {/* SDK Loader Component */}
+      <CashfreeSDKLoader />
+      {/* SDK Status Component */}
+      <CashfreeSDKStatus />
     </div>
   );
 }

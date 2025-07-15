@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Head from "next/head";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,6 +92,11 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        {/* Load Cashfree SDK using Next.js Script with beforeInteractive strategy */}
+        <Script
+          src="https://sdk.cashfree.com/js/v3/cashfree.js"
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );

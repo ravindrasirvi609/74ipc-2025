@@ -16,12 +16,20 @@ export interface PaymentSessionData {
 
 export class CashfreeService {
   private static getBaseUrl(): string {
+    console.log("Environment:", process.env.CASHFREE_ENVIRONMENT);
+
     return process.env.CASHFREE_ENVIRONMENT === "production"
       ? "https://api.cashfree.com"
       : "https://sandbox.cashfree.com";
   }
 
   private static getHeaders(): Record<string, string> {
+    console.log("Headers:", {
+      "Content-Type": "application/json",
+      "x-client-id": process.env.CASHFREE_APP_ID!,
+      "x-client-secret": process.env.CASHFREE_SECRET_KEY!,
+      "x-api-version": "2023-08-01",
+    });
     return {
       "Content-Type": "application/json",
       "x-client-id": process.env.CASHFREE_APP_ID!,
