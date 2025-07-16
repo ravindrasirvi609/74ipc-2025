@@ -163,7 +163,7 @@ const Sponsors = () => {
       icon: Users,
       title: "Global Exposure",
       description:
-        "Reach 5000+ pharmaceutical professionals from 50+ countries",
+        "Reach 12000+ pharmaceutical professionals from 50+ countries",
     },
     {
       icon: Handshake,

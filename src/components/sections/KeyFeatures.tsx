@@ -99,7 +99,7 @@ const KeyFeatures = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               {
-                number: "5000+",
+                number: "12000+",
                 label: "Attendees",
                 sublabel: "From 50+ Countries",
               },

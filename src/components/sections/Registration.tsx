@@ -300,7 +300,7 @@ const Registration = () => {
               Ready to Register?
             </h3>
             <p className="text-gray-600 mb-6 max-w-md">
-              Join 5000+ professionals at the most prestigious pharmaceutical
+              Join 12000+ professionals at the most prestigious pharmaceutical
               event in India.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">

@@ -287,5 +287,41 @@ function createPaymentFailureHTML(
   `;
 }
 
+// Generic email sending function
+interface SendEmailOptions {
+  to: string | string[];
+  subject: string;
+  html: string;
+  from?: string;
+}
+
+async function sendEmail(options: SendEmailOptions): Promise<EmailResult> {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: options.from || "APTI Conference <noreply@74ipc2025.com>",
+      to: Array.isArray(options.to) ? options.to : [options.to],
+      subject: options.subject,
+      html: options.html,
+    });
+
+    if (error) {
+      console.error("Email sending error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, messageId: data?.id };
+  } catch (error) {
+    console.error("Email sending exception:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown email error",
+    };
+  }
+}
+
 // Export functions for ESM
-export { sendRegistrationConfirmationEmail, sendPaymentFailureEmail };
+export {
+  sendRegistrationConfirmationEmail,
+  sendPaymentFailureEmail,
+  sendEmail,
+};

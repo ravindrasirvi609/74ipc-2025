@@ -22,7 +22,7 @@ const ExpectedOutcomes = () => {
       icon: Users,
       title: "Enhanced Professional Networks",
       description:
-        "5000+ pharmaceutical professionals connecting and collaborating",
+        "12000+ pharmaceutical professionals connecting and collaborating",
       metrics: [
         "300+ new partnerships",
         "150+ mentor-mentee connections",
