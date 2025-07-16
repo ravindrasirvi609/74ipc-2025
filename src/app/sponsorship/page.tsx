@@ -52,7 +52,7 @@ const majorEventSponsorship = [
     tier: "Platinum Sponsor",
     price: "₹35,00,000",
     icon: Star,
-    color: "from-platinum-400 to-platinum-600",
+    color: "from-pink-400 to-pink-600",
     features: [
       "10 Complementary Registrations",
       "02 Executive Accommodations",
