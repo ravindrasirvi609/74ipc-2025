@@ -1,35 +1,36 @@
 import { Users, Building, Beaker, Factory, ShoppingCart } from "lucide-react";
+import Image from "next/image";
 
 export default function FederatingAssociations() {
   const associations = [
     {
       name: "IPA",
       fullName: "Indian Pharmaceutical Association",
-      icon: Factory,
+      logo: "/logos/IPA_logo.png",
       description: "Promoting pharmaceutical industry excellence",
     },
     {
       name: "IHPA",
       fullName: "Indian Hospital Pharmacists Association",
-      icon: Building,
+      logo: "/logos/IHPA_logo.png",
       description: "Advancing hospital pharmacy practice",
     },
     {
       name: "APTI",
       fullName: "Association of Pharmaceutical Teachers of India",
-      icon: Users,
+      logo: "/logos/apti_logo.png",
       description: "Leading pharmaceutical education",
     },
     {
       name: "IPGA",
       fullName: "Indian Pharmaceutical Graduates Association",
-      icon: Beaker,
+      logo: "/logos/IPGA_logo.png",
       description: "Supporting pharmaceutical graduates",
     },
     {
       name: "AIDCOC",
       fullName: "All India Drug Control Officers Confederation",
-      icon: ShoppingCart,
+      logo: "/logos/AIDCOC_logo.png",
       description: "Ensuring drug quality and safety",
     },
   ];
@@ -49,14 +50,19 @@ export default function FederatingAssociations() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {associations.map((association, index) => {
-            const IconComponent = association.icon;
             return (
               <div
                 key={index}
                 className="bg-secondary-800 rounded-lg p-6 text-center hover:bg-secondary-700 transition-colors group"
               >
                 <div className="bg-pharmaceutical-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-pharmaceutical-500 transition-colors">
-                  <IconComponent className="h-8 w-8 text-white" />
+                  <Image
+                    src={association.logo}
+                    alt={association.name + " logo"}
+                    className="h-12 w-12 object-contain"
+                    width={80}
+                    height={80}
+                  />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-pharmaceutical-400">
                   {association.name}
