@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Registration from "@/models/Registration";
-import CashfreeService from "@/lib/cashfree";
+import RazorpayService from "@/lib/razorpay";
 import { z } from "zod";
 
 // Validation schema
@@ -129,26 +129,29 @@ export async function POST(request: NextRequest) {
 
     await registration.save();
 
-    // Create Cashfree payment order
-    const paymentData = await CashfreeService.createOrder({
+    // Create Razorpay payment order
+    const paymentData = await RazorpayService.createOrder({
       orderId,
       orderAmount: finalAmount,
       customerName: `${validatedData.firstName} ${validatedData.lastName}`,
       customerEmail: validatedData.email,
       customerPhone: validatedData.phone,
-      returnUrl: `${process.env.APP_URL}/registration/success`,
-      notifyUrl: `${process.env.APP_URL}/api/registration/webhook`,
+      notes: {
+        registration_category: validatedData.category,
+        registration_type: validatedData.registrationType,
+        apti_member: validatedData.isAPTIMember.toString(),
+      },
     });
 
-    console.log("Payment data received from Cashfree:", {
+    console.log("Payment data received from Razorpay:", {
       orderId: paymentData.orderId,
-      paymentSessionId: paymentData.paymentSessionId,
-      paymentUrl: paymentData.paymentUrl ? "[URL PRESENT]" : "[NO URL]",
+      razorpayOrderId: paymentData.razorpayOrderId,
+      orderAmount: paymentData.orderAmount,
     });
 
-    // Update registration with Cashfree order ID
+    // Update registration with Razorpay order ID
     await Registration.findByIdAndUpdate(registration._id, {
-      cashfreeOrderId: paymentData.paymentSessionId,
+      razorpayOrderId: paymentData.razorpayOrderId,
     });
 
     return NextResponse.json({
@@ -158,8 +161,14 @@ export async function POST(request: NextRequest) {
         registrationId: registration._id,
         orderId,
         paymentAmount: finalAmount,
-        paymentSessionId: paymentData.paymentSessionId,
-        paymentUrl: paymentData.paymentUrl,
+        razorpayOrderId: paymentData.razorpayOrderId,
+        keyId: paymentData.keyId,
+        currency: paymentData.currency,
+        customerInfo: {
+          name: `${validatedData.firstName} ${validatedData.lastName}`,
+          email: validatedData.email,
+          contact: validatedData.phone,
+        },
       },
     });
   } catch (error) {

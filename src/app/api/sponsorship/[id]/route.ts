@@ -5,12 +5,12 @@ import Sponsorship from "@/models/Sponsorship";
 // GET - Get specific sponsorship application by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
 
-    const { id } = params;
+    const { id } = await context.params;
 
     if (!id) {
       return NextResponse.json(
@@ -53,12 +53,12 @@ export async function GET(
 // PUT - Update sponsorship application (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
 
-    const { id } = params;
+    const { id } = await context.params;
     const updates = await request.json();
 
     if (!id) {
@@ -120,12 +120,12 @@ export async function PUT(
 // DELETE - Delete sponsorship application (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
 
-    const { id } = params;
+    const { id } = await context.params;
 
     if (!id) {
       return NextResponse.json(

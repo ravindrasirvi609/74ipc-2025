@@ -1,158 +1,126 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Registration from "@/models/Registration";
-import CashfreeService from "@/lib/cashfree";
+import { sendRegistrationConfirmationEmail } from "@/lib/email";
+import crypto from "crypto";
 
 export async function POST(request: NextRequest) {
   try {
     await dbConnect();
 
-    const body = await request.json();
-    console.log("Cashfree webhook received:", body);
+    const body = await request.text();
+    const signature = request.headers.get("x-razorpay-signature");
 
-    const { order_id, order_status, payment_status, order_amount } = body;
-
-    if (!order_id) {
+    if (!signature) {
       return NextResponse.json(
-        { success: false, message: "Order ID is required" },
+        { success: false, message: "Missing signature" },
         { status: 400 }
       );
     }
 
-    const registration = await Registration.findOne({ orderId: order_id });
+    // Verify webhook signature (if webhook secret is configured)
+    if (process.env.RAZORPAY_WEBHOOK_SECRET) {
+      const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_WEBHOOK_SECRET)
+        .update(body)
+        .digest("hex");
 
-    if (!registration) {
-      console.error(`Registration not found for order ID: ${order_id}`);
-      return NextResponse.json(
-        { success: false, message: "Registration not found" },
-        { status: 404 }
-      );
+      if (expectedSignature !== signature) {
+        return NextResponse.json(
+          { success: false, message: "Invalid signature" },
+          { status: 400 }
+        );
+      }
     }
 
-    try {
-      const paymentDetails = await CashfreeService.verifyPayment(order_id);
+    const webhookData = JSON.parse(body);
+    console.log("Razorpay webhook received:", webhookData.event);
 
-      let updateData: any = {
-        paymentStatus:
-          paymentDetails.paymentStatus === "SUCCESS" ? "Completed" : "Failed",
-      };
+    const { event, payload } = webhookData;
 
-      if (paymentDetails.paymentStatus === "SUCCESS") {
-        updateData.paymentId = paymentDetails.cfOrderId;
-        updateData.paymentAmount = paymentDetails.orderAmount;
+    // Handle payment.captured event
+    if (event === "payment.captured") {
+      const payment = payload.payment.entity;
+      const orderId = payment.notes?.order_id || payment.order_id;
 
-        // Send confirmation email
-        try {
-          const emailModule = await import("@/lib/email");
-          const emailResult =
-            await emailModule.sendRegistrationConfirmationEmail(registration);
-          if (!emailResult.success) {
-            console.error(
-              "Failed to send confirmation email:",
-              emailResult.error
-            );
-          } else {
-            console.log(
-              "Confirmation email sent successfully:",
-              emailResult.messageId
-            );
-          }
-        } catch (emailError) {
-          console.error("Error sending confirmation email:", emailError);
-        }
-      } else {
-        // Send failure email
-        try {
-          const emailModule = await import("@/lib/email");
-          const failureReason = "Payment verification failed";
-          const emailResult = await emailModule.sendPaymentFailureEmail(
-            registration,
-            failureReason
-          );
-          if (!emailResult.success) {
-            console.error("Failed to send failure email:", emailResult.error);
-          } else {
-            console.log(
-              "Failure email sent successfully:",
-              emailResult.messageId
-            );
-          }
-        } catch (emailError) {
-          console.error("Error sending failure email:", emailError);
-        }
+      if (!orderId) {
+        return NextResponse.json(
+          { success: false, message: "Order ID not found in payment data" },
+          { status: 400 }
+        );
       }
+
+      const registration = await Registration.findOne({
+        $or: [{ orderId: orderId }, { razorpayOrderId: payment.order_id }],
+      });
+
+      if (!registration) {
+        console.error(`Registration not found for order ID: ${orderId}`);
+        return NextResponse.json(
+          { success: false, message: "Registration not found" },
+          { status: 404 }
+        );
+      }
+
+      // Update registration with payment details
+      const updateData = {
+        paymentStatus: "Completed",
+        razorpayPaymentId: payment.id,
+        paymentCompletedAt: new Date(),
+        paymentMethod: payment.method,
+      };
 
       await Registration.findByIdAndUpdate(registration._id, updateData);
 
-      console.log(
-        `Payment ${paymentDetails.paymentStatus} for order ${order_id}`
-      );
+      // Send confirmation email
+      try {
+        await sendRegistrationConfirmationEmail(registration);
+        console.log("Confirmation email sent successfully via webhook");
+      } catch (emailError) {
+        console.error(
+          "Failed to send confirmation email via webhook:",
+          emailError
+        );
+        // Don't fail the webhook if email fails
+      }
 
-      // TODO: Add email notifications here using Resend
-      // For now, just log the status
-      console.log(`Registration updated for ${registration.email}`);
+      return NextResponse.json({ success: true, message: "Payment processed" });
+    }
+
+    // Handle payment.failed event
+    if (event === "payment.failed") {
+      const payment = payload.payment.entity;
+      const orderId = payment.notes?.order_id || payment.order_id;
+
+      if (orderId) {
+        await Registration.findOneAndUpdate(
+          {
+            $or: [{ orderId: orderId }, { razorpayOrderId: payment.order_id }],
+          },
+          {
+            paymentStatus: "Failed",
+            paymentFailureReason: payment.error_description || "Payment failed",
+          }
+        );
+      }
 
       return NextResponse.json({
         success: true,
-        message: "Webhook processed successfully",
+        message: "Payment failure recorded",
       });
-    } catch (verificationError) {
-      console.error("Payment verification failed:", verificationError);
-
-      await Registration.findByIdAndUpdate(registration._id, {
-        paymentStatus: "Failed",
-      });
-
-      // Send failure email for verification error
-      try {
-        const emailModule = await import("@/lib/email");
-        const failureReason =
-          verificationError instanceof Error
-            ? verificationError.message
-            : "Payment verification failed";
-        const emailResult = await emailModule.sendPaymentFailureEmail(
-          registration,
-          failureReason
-        );
-        if (!emailResult.success) {
-          console.error("Failed to send failure email:", emailResult.error);
-        } else {
-          console.log(
-            "Failure email sent successfully:",
-            emailResult.messageId
-          );
-        }
-      } catch (emailError) {
-        console.error("Error sending failure email:", emailError);
-      }
-
-      return NextResponse.json(
-        { success: false, message: "Payment verification failed" },
-        { status: 400 }
-      );
     }
+
+    // For other events, just acknowledge
+    return NextResponse.json({ success: true, message: "Webhook received" });
   } catch (error) {
     console.error("Webhook processing error:", error);
     return NextResponse.json(
       {
         success: false,
         message: "Webhook processing failed",
+        error: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
   }
-}
-
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const challenge = searchParams.get("challenge");
-
-  if (challenge) {
-    return NextResponse.json({ challenge });
-  }
-
-  return NextResponse.json({
-    success: true,
-    message: "Webhook endpoint is active",
-  });
 }

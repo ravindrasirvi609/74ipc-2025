@@ -83,7 +83,7 @@ export default function PaymentAndInstructions() {
                   Secure Payment Processing
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  All payments are processed through Cashfree Payment Gateway
+                  All payments are processed through Razorpay Payment Gateway
                   with industry-standard security protocols. Your payment
                   information is encrypted and secure.
                 </p>

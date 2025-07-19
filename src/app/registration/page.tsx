@@ -7,7 +7,6 @@ import APTIMembershipNotice from "@/components/sections/APTIMembershipNotice";
 import RegistrationInclusions from "@/components/sections/RegistrationInclusions";
 import PricingTable from "@/components/sections/PricingTable";
 import PaymentAndInstructions from "@/components/sections/PaymentAndInstructions";
-import CashfreeSDKLoader from "@/components/CashfreeSDKLoader";
 
 export default function RegistrationPage() {
   const handleRegisterClick = (categoryId: number) => {
@@ -76,9 +75,6 @@ export default function RegistrationPage() {
           </div>
         </div>
       </section>
-
-      {/* SDK Loader Component */}
-      <CashfreeSDKLoader />
     </div>
   );
 }

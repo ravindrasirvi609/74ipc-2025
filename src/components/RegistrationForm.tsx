@@ -16,7 +16,7 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
-// Remove: import { useCashfree } from "@/hooks/useCashfree";
+import { useRazorpay } from "@/hooks/useRazorpay";
 
 // Form validation schema
 const registrationSchema = z.object({
@@ -82,7 +82,7 @@ const pricingInfo: PricingInfo = {
 const RegistrationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  // Remove: useCashfree(); // ← one-liner
+  const { openCheckout } = useRazorpay();
 
   const {
     register,
@@ -163,58 +163,66 @@ const RegistrationForm = () => {
         throw new Error(result.message || "Registration failed");
       }
 
-      // Use Cashfree popup checkout according to documentation
-      if (result.data?.paymentSessionId) {
-        // Check if Cashfree SDK is loaded
-        if (typeof window !== "undefined" && (window as any).Cashfree) {
-          try {
-            // Use the global Cashfree SDK (mode can be set via env or hardcoded)
-            const mode =
-              process.env.NEXT_PUBLIC_CASHFREE_ENVIRONMENT === "production"
-                ? "production"
-                : "sandbox";
-            const cashfree = (window as any).Cashfree({ mode });
-
-            const checkoutOptions = {
-              paymentSessionId: result.data.paymentSessionId,
-              redirectTarget: "_modal", // Opens payment in popup modal
-            };
-
-            setIsSubmitting(true);
-            cashfree
-              .checkout(checkoutOptions)
-              .then((checkoutResult: any) => {
-                if (checkoutResult?.error) {
-                  setSubmitError(
-                    `Payment failed: ${checkoutResult.error.description || checkoutResult.error.message || "Unknown error"}`
-                  );
-                  setIsSubmitting(false);
-                } else if (
-                  checkoutResult?.paymentDetails ||
-                  checkoutResult?.redirect
-                ) {
-                  // Payment success or redirect
-                  window.location.href = `/registration/success?order_id=${result.data.orderId}`;
-                } else {
-                  // Fallback: redirect to success page to check status
-                  window.location.href = `/registration/success?order_id=${result.data.orderId}`;
-                }
-              })
-              .catch(() => {
-                setSubmitError(
-                  "Failed to open payment checkout. Please try again."
-                );
+      // Use Razorpay checkout
+      if (result.data?.razorpayOrderId) {
+        try {
+          const paymentOptions = {
+            key: result.data.keyId,
+            amount: result.data.paymentAmount * 100, // Amount in paise
+            currency: result.data.currency,
+            order_id: result.data.razorpayOrderId,
+            name: "74th Indian Pharmaceutical Congress",
+            description: `Registration - ${data.category} (${data.registrationType})`,
+            prefill: {
+              name: result.data.customerInfo.name,
+              email: result.data.customerInfo.email,
+              contact: result.data.customerInfo.contact,
+            },
+            theme: {
+              color: "#667eea",
+            },
+            modal: {
+              ondismiss: () => {
+                setSubmitError("Payment was cancelled. Please try again.");
                 setIsSubmitting(false);
-              });
-          } catch {
-            setSubmitError(
-              "Payment system initialization failed. Please refresh and try again."
+              },
+            },
+          };
+
+          const paymentResult = await openCheckout(paymentOptions);
+
+          // Verify payment on server
+          const verificationResponse = await fetch(
+            "/api/registration/verify-payment",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                razorpay_order_id: paymentResult.razorpay_order_id,
+                razorpay_payment_id: paymentResult.razorpay_payment_id,
+                razorpay_signature: paymentResult.razorpay_signature,
+                order_id: result.data.orderId,
+              }),
+            }
+          );
+
+          const verificationResult = await verificationResponse.json();
+
+          if (verificationResult.success) {
+            // Payment verified successfully
+            window.location.href = `/registration/success?order_id=${result.data.orderId}`;
+          } else {
+            throw new Error(
+              verificationResult.message || "Payment verification failed"
             );
-            setIsSubmitting(false);
           }
-        } else {
+        } catch (paymentError) {
           setSubmitError(
-            "Payment system not ready. Please refresh the page and try again."
+            paymentError instanceof Error
+              ? paymentError.message
+              : "Payment failed. Please try again."
           );
           setIsSubmitting(false);
         }
@@ -710,7 +718,7 @@ const RegistrationForm = () => {
           </button>
 
           <p className="text-sm text-gray-600 mt-4">
-            You will be redirected to Cashfree secure payment gateway
+            You will be redirected to Razorpay secure payment gateway
           </p>
         </div>
       </form>

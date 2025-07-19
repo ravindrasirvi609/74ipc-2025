@@ -1,11 +1,11 @@
 # 74th Indian Pharmaceutical Congress 2025 - Registration System
 
-A comprehensive registration system with integrated Cashfree payment gateway for the 74th Indian Pharmaceutical Congress 2025.
+A comprehensive registration system with integrated Razorpay payment gateway for the 74th Indian Pharmaceutical Congress 2025.
 
 ## 🚀 Features
 
 - **Complete Registration Form** with validation using Zod
-- **Cashfree Payment Gateway** integration for secure payments
+- **Razorpay Payment Gateway** integration for secure payments
 - **MongoDB Database** for storing registration data
 - **Email Notifications** for confirmation and failure cases
 - **Responsive Design** with Tailwind CSS
@@ -19,7 +19,7 @@ A comprehensive registration system with integrated Cashfree payment gateway for
 - **Styling**: Tailwind CSS
 - **Forms**: React Hook Form with Zod validation
 - **Database**: MongoDB with Mongoose
-- **Payment**: Cashfree Payment Gateway
+- **Payment**: Razorpay Payment Gateway
 - **Email**: Nodemailer
 - **Icons**: Lucide React
 
@@ -253,13 +253,11 @@ Then configure the webhook URL in Cashfree dashboard as:
 ### Common Issues:
 
 1. **Database Connection Failed**
-
    - Check MongoDB URI format
    - Ensure MongoDB server is running
    - Verify network connectivity
 
 2. **Payment Gateway Errors**
-
    - Verify Cashfree credentials
    - Check environment setting (sandbox vs production)
    - Ensure webhook URL is accessible

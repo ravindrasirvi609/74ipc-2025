@@ -92,9 +92,9 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        {/* Load Cashfree SDK using Next.js Script with beforeInteractive strategy */}
+        {/* Load Razorpay SDK using Next.js Script with beforeInteractive strategy */}
         <Script
-          src="https://sdk.cashfree.com/js/v3/cashfree.js"
+          src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="beforeInteractive"
         />
       </body>

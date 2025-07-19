@@ -35,7 +35,11 @@ export interface IRegistration extends Document {
   paymentAmount: number;
   paymentId?: string;
   orderId: string;
-  cashfreeOrderId?: string;
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  paymentCompletedAt?: Date;
+  paymentMethod?: string;
+  paymentFailureReason?: string;
 
   // Timestamps
   createdAt: Date;
@@ -188,7 +192,22 @@ const RegistrationSchema = new Schema<IRegistration>(
       required: [true, "Order ID is required"],
       trim: true,
     },
-    cashfreeOrderId: {
+    razorpayOrderId: {
+      type: String,
+      trim: true,
+    },
+    razorpayPaymentId: {
+      type: String,
+      trim: true,
+    },
+    paymentCompletedAt: {
+      type: Date,
+    },
+    paymentMethod: {
+      type: String,
+      trim: true,
+    },
+    paymentFailureReason: {
       type: String,
       trim: true,
     },

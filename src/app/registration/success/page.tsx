@@ -22,6 +22,29 @@ const PaymentSuccess = () => {
   const orderToken = searchParams.get("order_token");
 
   useEffect(() => {
+    const verifyPayment = async () => {
+      try {
+        const response = await fetch(`/api/registration?orderId=${orderId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          setVerificationResult(result.data);
+        } else {
+          setError(result.message || "Registration not found");
+        }
+      } catch (err) {
+        setError("An error occurred while verifying registration");
+      } finally {
+        setIsVerifying(false);
+      }
+    };
+
     if (orderId) {
       verifyPayment();
     } else {
@@ -29,30 +52,6 @@ const PaymentSuccess = () => {
       setIsVerifying(false);
     }
   }, [orderId]);
-
-  const verifyPayment = async () => {
-    try {
-      const response = await fetch("/api/registration/verify-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ orderId }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        setVerificationResult(result.data);
-      } else {
-        setError(result.message || "Payment verification failed");
-      }
-    } catch (err) {
-      setError("An error occurred while verifying payment");
-    } finally {
-      setIsVerifying(false);
-    }
-  };
 
   if (isVerifying) {
     return (

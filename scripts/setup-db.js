@@ -95,7 +95,7 @@ async function setupDatabase() {
 
     console.log('\n🎉 Database setup completed successfully!');
     console.log('\nNext steps:');
-    console.log('1. Update your .env.local file with Cashfree credentials');
+    console.log('1. Update your .env.local file with Razorpay credentials');
     console.log('2. Configure email settings (optional)');
     console.log('3. Start the development server: npm run dev');
     console.log('4. Test the registration form at: http://localhost:3000/registration');
@@ -112,8 +112,8 @@ async function setupDatabase() {
 // Print environment check
 console.log('🔧 Environment Check:');
 console.log('MONGODB_URI:', MONGODB_URI ? '✅ Configured' : '❌ Missing');
-console.log('CASHFREE_APP_ID:', process.env.CASHFREE_APP_ID ? '✅ Configured' : '⚠️  Missing');
-console.log('CASHFREE_SECRET_KEY:', process.env.CASHFREE_SECRET_KEY ? '✅ Configured' : '⚠️  Missing');
+console.log('RAZORPAY_KEY_ID:', process.env.RAZORPAY_KEY_ID ? '✅ Configured' : '⚠️  Missing');
+console.log('RAZORPAY_KEY_SECRET:', process.env.RAZORPAY_KEY_SECRET ? '✅ Configured' : '⚠️  Missing');
 console.log('EMAIL_HOST:', process.env.EMAIL_HOST ? '✅ Configured' : '⚠️  Missing (Optional)');
 console.log('');
 
