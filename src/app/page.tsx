@@ -7,6 +7,7 @@ import FederatingAssociations from "@/components/sections/FederatingAssociations
 import KeyFeatures from "@/components/sections/KeyFeatures";
 import Speakers from "@/components/sections/Speakers";
 import Sponsors from "@/components/sections/Sponsors";
+import StickyOBRFLogo from "@/components/StickyOBRFLogo";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -25,6 +26,9 @@ export default function HomePage() {
       <FederatingAssociations />
       <Speakers />
       <Sponsors />
+
+      {/* Sticky OBRF Logo */}
+      <StickyOBRFLogo />
     </div>
   );
 }

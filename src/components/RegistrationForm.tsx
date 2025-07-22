@@ -17,6 +17,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useRazorpay } from "@/hooks/useRazorpay";
+import { useRouter } from "next/navigation";
 
 // Form validation schema
 const registrationSchema = z.object({
@@ -62,7 +63,7 @@ interface PricingInfo {
 
 const pricingInfo: PricingInfo = {
   Students: {
-    "Super Saver": { base: 4000, withGST: 4720 },
+    "Super Saver": { base: 1, withGST: 1 },
     Regular: { base: 4500, withGST: 5310 },
   },
   Delegates: {
@@ -80,6 +81,8 @@ const pricingInfo: PricingInfo = {
 };
 
 const RegistrationForm = () => {
+  const router = useRouter();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { openCheckout } = useRazorpay();
@@ -212,7 +215,11 @@ const RegistrationForm = () => {
 
           if (verificationResult.success) {
             // Payment verified successfully
-            window.location.href = `/registration/success?order_id=${result.data.orderId}`;
+
+            router.push(
+              `/registration/success?order_id=${result.data.orderId}`
+            );
+            // window.location.href = `/registration/success?order_id=${result.data.orderId}`;
           } else {
             throw new Error(
               verificationResult.message || "Payment verification failed"
