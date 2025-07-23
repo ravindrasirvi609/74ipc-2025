@@ -26,13 +26,31 @@ export interface PaymentVerificationData {
 
 export class RazorpayService {
   private static getInstance(): Razorpay {
-    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    const keyId = process.env.RAZORPAY_KEY_ID;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keyId || !keySecret) {
+      console.error("Missing Razorpay credentials:", {
+        keyId: keyId ? "✅ Present" : "❌ Missing",
+        keySecret: keySecret ? "✅ Present" : "❌ Missing",
+      });
       throw new Error("Razorpay credentials are not configured");
     }
 
+    // Validate key format
+    if (!keyId.startsWith("rzp_")) {
+      console.error("Invalid Razorpay Key ID format. Should start with 'rzp_'");
+      throw new Error("Invalid Razorpay Key ID format");
+    }
+
+    console.log("Razorpay credentials validated:", {
+      keyId: keyId.substring(0, 10) + "...",
+      environment: keyId.includes("test") ? "TEST" : "LIVE",
+    });
+
     return new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
+      key_id: keyId,
+      key_secret: keySecret,
     });
   }
 
@@ -43,6 +61,14 @@ export class RazorpayService {
     orderData: CreateOrderData
   ): Promise<PaymentSessionData> {
     try {
+      console.log("Creating Razorpay order with data:", {
+        orderId: orderData.orderId,
+        orderAmount: orderData.orderAmount,
+        customerName: orderData.customerName,
+        customerEmail: orderData.customerEmail,
+        customerPhone: orderData.customerPhone,
+      });
+
       const razorpay = this.getInstance();
 
       const options = {
@@ -53,12 +79,25 @@ export class RazorpayService {
           customer_name: orderData.customerName,
           customer_email: orderData.customerEmail,
           customer_phone: orderData.customerPhone,
+          order_id: orderData.orderId, // Add order_id to notes for webhook identification
           ...orderData.notes,
         },
         payment_capture: 1, // Auto capture payment
       };
 
+      console.log("Razorpay order options:", {
+        ...options,
+        notes: { ...options.notes, customer_phone: "[REDACTED]" },
+      });
+
       const order = await razorpay.orders.create(options);
+
+      console.log("Razorpay order created successfully:", {
+        id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+        status: order.status,
+      });
 
       if (!order || !order.id) {
         throw new Error("Failed to create Razorpay order");
@@ -71,13 +110,35 @@ export class RazorpayService {
         currency: order.currency,
         keyId: process.env.RAZORPAY_KEY_ID!,
       };
-    } catch (error) {
-      console.error("Razorpay order creation error:", error);
-      throw new Error(
-        `Payment order creation failed: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
+    } catch (error: any) {
+      console.error("Razorpay order creation error:", {
+        message: error.message,
+        statusCode: error.statusCode,
+        error: error.error,
+        description: error.error?.description,
+        code: error.error?.code,
+        reason: error.error?.reason,
+        source: error.error?.source,
+      });
+
+      // Provide more specific error messages
+      let errorMessage = "Payment order creation failed";
+
+      if (error.statusCode === 400) {
+        errorMessage = `Invalid request: ${error.error?.description || error.message}`;
+      } else if (error.statusCode === 401) {
+        errorMessage =
+          "Authentication failed. Please check your Razorpay credentials.";
+      } else if (error.statusCode === 500) {
+        errorMessage =
+          "Razorpay server error. Please try again in a few moments.";
+      } else if (error.error?.description) {
+        errorMessage = error.error.description;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      throw new Error(errorMessage);
     }
   }
 

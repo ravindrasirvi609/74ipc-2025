@@ -80,7 +80,7 @@ async function setupDatabase() {
       accommodation: false,
       accompanying: 0,
       paymentStatus: 'Pending',
-      paymentAmount: 4720,
+      paymentAmount: 1,
       orderId: 'TEST_ORDER_' + Date.now(),
       createdAt: new Date(),
       updatedAt: new Date()

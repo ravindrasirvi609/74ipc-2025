@@ -38,7 +38,7 @@ const registrationSchema = z.object({
 const getPricing = () => {
   return {
     Students: {
-      "Super Saver": { base: 4000, withGST: 4720 },
+      "Super Saver": { base: 1, withGST: 1 },
       Regular: { base: 4500, withGST: 5310 },
     },
     Delegates: {

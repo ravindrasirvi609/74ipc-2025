@@ -21,7 +21,7 @@ const registrationCategories: PricingCategory[] = [
   {
     id: 1,
     category: "Students",
-    superSaver: "₹4,720",
+    superSaver: "₹1",
     superSaverBase: "₹4,000",
     regular: "₹5,310",
     regularBase: "₹4,500",
@@ -64,7 +64,7 @@ const registrationCategories: PricingCategory[] = [
   {
     id: 4,
     category: "Accompanying Person",
-    superSaver: "₹4,720",
+    superSaver: "₹1",
     superSaverBase: "₹4,000",
     regular: "₹5,310",
     regularBase: "₹4,500",
